@@ -1,0 +1,39 @@
+<template>
+    <lightning-card>
+        <lightning-layout>
+            <lightning-layout-item padding="around-small" size="3">
+                <div class="page-section page-right">
+                    <p class="tb">Search by Name:</p>
+                </div>
+            </lightning-layout-item>
+            <lightning-layout-item padding="around-small" size="5">
+                <div class="page-section page-center"> 
+                    <lightning-input class="slds-var-m-bottom_small" type="search"
+                            onchange={handleWordChange}
+                            variant="label-hidden"
+                            label="Contact search list using lightning-datatable."
+                            placeholder="Search for contacts"
+                            value={searchValue}>
+                    </lightning-input>  
+                </div>
+            </lightning-layout-item>    
+            <lightning-layout-item padding="around-small" size="3">
+                <div class="page-section page-right">
+                    <lightning-button label="Find"
+                            onclick={handleSearchKeyword}
+                            value={searchValue}
+                            variant="brand">
+                    </lightning-button>
+                </div>
+            </lightning-layout-item>
+        </lightning-layout>   
+        <template if:true={contacts.data}>
+            <lightning-datatable
+                    key-field="id"
+                    data={contacts.data}
+                    columns={columns}
+                    >
+            </lightning-datatable>
+        </template>
+    </lightning-card>
+</template>
