@@ -1,5 +1,5 @@
 <template>
-    <lightning-card>
+    <lightning-card title="Contact List" aria-setsize="20">
         <lightning-layout>
             <lightning-layout-item padding="around-small" size="3">
                 <div class="page-section page-right">
@@ -27,12 +27,12 @@
                 </div>
             </lightning-layout-item>
         </lightning-layout>   
-        <template if:true={contacts.data}>
-            <lightning-datatable
-                    key-field="id"
-                    data={contacts.data}
-                    columns={columns}
-                    >
+        <template if:true={data}>
+            <lightning-datatable columns={columns} 
+                            data={data} 
+                            key-field="id"
+                            hide-checkbox-column="true"
+                            show-row-number-column="true">
             </lightning-datatable>
         </template>
     </lightning-card>
