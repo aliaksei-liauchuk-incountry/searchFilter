@@ -1,11 +1,11 @@
-import {LightningElement, track, wire} from 'lwc';
+import {LightningElement, track, wire, api} from 'lwc';
 import searchContacts from '@salesforce/apex/ContactController.searchContacts';
 const columns = [
     {label: 'First Name', fieldName: 'FirstName', type: 'text'}, 
     {label: 'Last Name', fieldName: 'LastName', type: 'text'}, 
     {label: 'Email', fieldName: 'Email', type: 'email'},  
     {label: 'Mobile Phone', fieldName: 'MobilePhone', type: 'phone'}, 
-    {label: 'Account Name', fieldName: 'AccountName', type: 'text'}, 
+    {label: 'Account Name', fieldName: 'AccountLink', type: 'url', typeAttributes: { label: { fieldName: 'AccountName' }, target: '__blank'}}, 
     {label: 'CreatedDate', fieldName: 'CreatedDate', type: 'date',
         typeAttributes:{
             year: "numeric",
@@ -17,7 +17,7 @@ const columns = [
         }
     }
 ];
-export default class ContactList extends LightningElement {
+export default class ContactList extends NavigationMixin (LightningElement) {
     ampm = true;
     searchValue = '';
     searchKey = '';
@@ -38,6 +38,7 @@ export default class ContactList extends LightningElement {
 
                 if (row.Account) {
                     rowData.AccountName = row.Account.Name;
+                    rowData.AccountLink = "/" + row.Account.Id;
                 }
                 currentData.push(rowData);
             });
@@ -56,5 +57,17 @@ export default class ContactList extends LightningElement {
     handleSearchKeyword (event) {
             const searchKey = event.target.value;
 			this.searchKey = searchKey
+    }
+
+    handleRowAction() {
+        this[NavigationMixin.Navigate]({
+                type: "standard__recordRelationshipPage",
+                attributes: {
+                    recordId: this.account.data.Id,
+                    objectApiName: 'Contact',
+                    relationshipApiName: 'Account',
+                    actionName: 'view'
+                }
+            })
     }
 }
