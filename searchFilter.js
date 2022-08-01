@@ -1,4 +1,4 @@
-import {LightningElement, track, wire, api} from 'lwc';
+import {LightningElement, track, wire} from 'lwc';
 import searchContacts from '@salesforce/apex/ContactController.searchContacts';
 const columns = [
     {label: 'First Name', fieldName: 'FirstName', type: 'text'}, 
@@ -17,7 +17,7 @@ const columns = [
         }
     }
 ];
-export default class ContactList extends NavigationMixin (LightningElement) {
+export default class ContactList extends LightningElement {
     ampm = true;
     searchValue = '';
     searchKey = '';
@@ -25,7 +25,7 @@ export default class ContactList extends NavigationMixin (LightningElement) {
     @track columns = columns;
 
     @wire(searchContacts, {searchKey: '$searchKey'})
-    con({error, data}) {
+    con({data}) {
         if(data) {
             let currentData = [];
             data.forEach((row) => {
@@ -44,9 +44,6 @@ export default class ContactList extends NavigationMixin (LightningElement) {
             });
             this.data = currentData;
         }
-        else if(error) {
-            window.console.log(error);
-        }
     }
 
     handleWordChange(event) {
@@ -57,17 +54,5 @@ export default class ContactList extends NavigationMixin (LightningElement) {
     handleSearchKeyword (event) {
             const searchKey = event.target.value;
 			this.searchKey = searchKey
-    }
-
-    handleRowAction() {
-        this[NavigationMixin.Navigate]({
-                type: "standard__recordRelationshipPage",
-                attributes: {
-                    recordId: this.account.data.Id,
-                    objectApiName: 'Contact',
-                    relationshipApiName: 'Account',
-                    actionName: 'view'
-                }
-            })
     }
 }
