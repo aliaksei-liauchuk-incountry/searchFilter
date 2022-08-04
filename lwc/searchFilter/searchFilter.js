@@ -6,26 +6,17 @@ const columns = [
     {label: 'Email', fieldName: 'Email', type: 'email'},  
     {label: 'Mobile Phone', fieldName: 'MobilePhone', type: 'phone'}, 
     {label: 'Account Name', fieldName: 'AccountLink', type: 'url', typeAttributes: { label: { fieldName: 'AccountName' }, target: '__blank'}}, 
-    {label: 'CreatedDate', fieldName: 'CreatedDate', type: 'date',
-        typeAttributes:{
-            year: 'numeric',
-            month: '2-digit',
-            day: '2-digit',
-            hour: '2-digit',
-            minute: '2-digit',
-            hour12: 'true'
-        }
-    }
+    {label: 'CreatedDate', fieldName: 'CreatedDate', type: 'date', typeAttributes:{year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', hour12: 'true'}}
 ];
 export default class ContactList extends LightningElement {
     ampm = true;
     searchValue = '';
     searchKey = '';
-    @track data = [];
-    @track columns = columns;
+    data = [];
+    columns = columns;
 
     @wire(searchContacts, {searchKey: '$searchKey'})
-    con({data}) {
+    wiredContacts({data}) {
         if(data) {
             let currentData = [];
             data.forEach((row) => {
@@ -48,11 +39,11 @@ export default class ContactList extends LightningElement {
 
     handleWordChange(event) {
 		const searchValue = event.target.value;
-			this.searchValue = searchValue;
-	}
+		this.searchValue = searchValue;
+    }
 
     handleSearchKeyword (event) {
-            const searchKey = event.target.value;
-			this.searchKey = searchKey
+        const searchKey = event.target.value;
+		this.searchKey = searchKey
     }
 }
