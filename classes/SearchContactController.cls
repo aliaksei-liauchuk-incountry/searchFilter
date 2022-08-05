@@ -22,4 +22,3 @@ public with sharing class SearchContactController {
 			LIMIT 10];
 	}
  }
- 
