@@ -1,6 +1,6 @@
 @isTest
 private class SearchContactControllerTest {
-
+    
 	  @testSetup
   	static void createContacts() {
     	  List<Contact> contacts = new List<Contact>();
@@ -42,9 +42,9 @@ private class SearchContactControllerTest {
 	  @isTest
     static void testWrongSearchContacts() {
 		    Test.startTest();
-		    List<Contact> returnedContacts =  SearchContactController.searchContacts('&34');
+		    List<Contact> returnedContacts =  SearchContactController.searchContacts('&*');
         Test.stopTest();
-        System.assert(returnedContacts.size() == 0, 'Was expecting to find ten contacts');
+        System.assert(returnedContacts.size() == 0, 'Was expecting to find no contacts');
   	}
     
     @isTest
