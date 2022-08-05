@@ -11,7 +11,7 @@ private class SearchContactControllerTest {
 	}
 
 	@isTest
-	static void testGetContacts() {
+	static void getContacts_loadContacts_contactsRecieved() {
 		List<Contact> newContacts = [
 			SELECT FirstName, LastName, Email, MobilePhone, Account.Name, CreatedDate 
 			FROM Contact];
@@ -23,7 +23,7 @@ private class SearchContactControllerTest {
 	}
 
 	@isTest
-	static void testSearchContacts() {
+	static void searchContacts_searchContactByKeyword_contactRecieved() {
 		List<Contact> newContacts = [
 			SELECT FirstName, LastName, Email, MobilePhone, Account.Name, CreatedDate 
 			FROM Contact];
@@ -34,7 +34,7 @@ private class SearchContactControllerTest {
 	}
 
 	@isTest
-	static void testReturnGetContacts() {
+	static void searchContacts_checkIfReturnGetContacts_contactsRecieved() {
 		List<Contact> newContacts = [
 			SELECT FirstName, LastName, Email, MobilePhone, Account.Name, CreatedDate 
 			FROM Contact];
@@ -46,7 +46,7 @@ private class SearchContactControllerTest {
 	}
 
 	@isTest
-	static void testWrongSearchContacts() {
+	static void searchContacts_checkInvalidInput_emptyList() {
 		List<Contact> newContacts = [
 			SELECT FirstName, LastName, Email, MobilePhone, Account.Name, CreatedDate 
 			FROM Contact];
@@ -57,7 +57,7 @@ private class SearchContactControllerTest {
 	}
 
 	@isTest
-	static void testNegativeGetContacts() {
+	static void getContacts_checkNegativeReturn_emptyList() {
 		List<Contact> contacts = [
 			SELECT FirstName, LastName, Email, MobilePhone, Account.Name, CreatedDate 
 			FROM Contact];
