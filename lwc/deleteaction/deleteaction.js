@@ -7,7 +7,7 @@ export default class DeleteAction extends LightningElement {
 	@api recordid;
 	@api firstname;
 	@api lastname;
-	progressValue
+	
 	
 	handleDelete(event) {
 		deleteRecord(this.recordid)
