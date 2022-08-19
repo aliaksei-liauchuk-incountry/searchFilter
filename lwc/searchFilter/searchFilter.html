@@ -1,67 +1,25 @@
 <!-- sldsValidatorIgnore -->
 <template>
-	<c-deleteaction 
-		if:true={delContactModal} 
-		class="slds-show slds-is-relative" 
-		recordid={recordId} 
-		firstname={firstName} 
-		lastname={lastName} 
-		onrefresh={haldleRefresh} 
-		onclose={haldleClose}>
-	</c-deleteaction>
-	<c-new-contact 
-		if:true={newContactModal} 
-		onrefresh={haldleRefresh} 
-		onclose={haldleClose}>
-	</c-new-contact>
-	<lightning-card title="Contact List" aria-setsize="20">
-		<lightning-layout>
-			<lightning-layout-item padding="around-small" size="3">
-				<div class="page-section page-right">
-					<p class="tb">Search by Name:</p>
-				</div>
-			</lightning-layout-item>
-			<lightning-layout-item padding="around-small" size="5">
-				<div class="page-section page-center"> 
-					<lightning-input
-						class="slds-var-m-bottom_small" 
-						type="search"
-						onchange={handleWordChange}
-						variant="label-hidden"
-						label="Contact search list using lightning-datatable."
-						placeholder="Search for contacts"
-						value={searchValue}>
-					</lightning-input>  
-				</div>
-			</lightning-layout-item>    
-			<lightning-layout-item padding="around-small" size="3">
-				<div class="page-section page-right">
-					<lightning-button 
-						class="slds-button" 
-						label="Find"
-						onclick={handleSearchKeyword}
-						value={searchValue}
-						variant="brand">
-					</lightning-button>
-					<lightning-button 
-						class="slds-button" 
-						label="New"
-						onclick={newContact}>
-					</lightning-button>
-				</div>
-			</lightning-layout-item>
-		</lightning-layout>   
-		<template if:true={data}>
-			<lightning-datatable 
-				class="slds-no-row-hover"
-				columns={columns} 
-				column-widths-mode="auto"
-				data={data} 
-				key-field="id"
-				hide-checkbox-column="true"
-				show-row-number-column="true"
-				onrowaction={delContact}>
-			</lightning-datatable>
-		</template>
-	</lightning-card>
+    <lightning-card title="Contact List">
+        <lightning-layout>
+            <lightning-layout-item padding="around-small" size="3">
+                <div class="page-section page-right slds-p-vertical_none">
+                    <p class="text">Search by Name:</p>
+                </div>
+            </lightning-layout-item>
+            <lightning-layout-item padding="around-small" size="5">
+                <div class="page-section page-right"> 
+                    <lightning-input type="search" onchange={handleWordChange} variant="label-hidden" placeholder="Search for contacts" value={searchValue}></lightning-input>
+                </div>
+            </lightning-layout-item>
+            <lightning-layout-item padding="around-small" size="3">
+                <div class="page-section page-right ">
+                    <lightning-button label="Find" onclick={handleSearchKeyword} value={searchValue} variant="brand"></lightning-button>
+                </div>
+            </lightning-layout-item>
+        </lightning-layout>
+        <template if:true={data}>
+            <lightning-datatable class="slds-no-row-hover" columns={columns} data={data} key-field="id" hide-checkbox-column="true" show-row-number-column="true"></lightning-datatable>
+        </template>
+    </lightning-card>
 </template>

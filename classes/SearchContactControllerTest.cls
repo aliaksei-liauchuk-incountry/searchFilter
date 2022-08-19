@@ -1,77 +1,82 @@
 @isTest
 private class SearchContactControllerTest {
 
-	@testSetup
-	static void createContacts() {
-		List<Contact> contacts = new List<Contact>();
-		for (Integer i = 0; i < 10; i++) {
-		contacts.add(new Contact(FirstName='Peter', LastName='Goldwin' + i));
-		}
-		insert contacts;
-	}
+    @testSetup
+    static void createContacts() {
+        List<Contact> contacts = new List<Contact>();
+        for (Integer i = 0; i < 10; i++) {
+            contacts.add(new Contact(FirstName='Peter', LastName='Goldwin' + i));
+        }
+        insert contacts;
+    }
 
-	@isTest
-	static void getContacts_loadContacts_contactsRecieved() {
-		List<Contact> newContacts = [
-			SELECT FirstName, LastName, Email, MobilePhone, Account.Name, CreatedDate 
-			FROM Contact];
-		Test.startTest();
-		List<Contact> returnedContacts = SearchContactController.getContacts();
-		Test.stopTest();
-		System.assertEquals(newContacts, returnedContacts, 'Contacts were not received');
-		System.assert(returnedContacts.size() == 10, 'Was expecting to find ten contact');
-	}
+    @isTest
+    static void getContacts_loadContacts_contactsRecieved() {
+        List<Contact> newContacts = [
+            SELECT FirstName, LastName, Email, MobilePhone, Account.Name, CreatedDate 
+            FROM Contact
+        ];
+        Test.startTest();
+        List<Contact> returnedContacts = SearchContactController.getContacts();
+        Test.stopTest();
+        System.assertEquals(newContacts, returnedContacts, 'Contacts were not received');
+        System.assert(returnedContacts.size() == 10, 'Was expecting to find ten contact');
+    }
 
-	@isTest
-	static void searchContacts_searchContactByKeyword_contactRecieved() {
-		List<Contact> newContacts = [
-			SELECT FirstName, LastName, Email, MobilePhone, Account.Name, CreatedDate 
-			FROM Contact];
-		Test.startTest();
-		List<Contact> returnedContacts = SearchContactController.searchContacts('5');
-		Test.stopTest();
-		System.assert(returnedContacts.size() > 0, 'Was expecting to find at least one contact');
-	}
+    @isTest
+    static void searchContacts_searchContactByKeyword_contactRecieved() {
+        List<Contact> newContacts = [
+            SELECT FirstName, LastName, Email, MobilePhone, Account.Name, CreatedDate 
+            FROM Contact
+        ];
+        Test.startTest();
+        List<Contact> returnedContacts = SearchContactController.searchContacts('5');
+        Test.stopTest();
+        System.assert(returnedContacts.size() > 0, 'Was expecting to find at least one contact');
+    }
 
-	@isTest
-	static void searchContacts_checkIfReturnGetContacts_contactsRecieved() {
-		List<Contact> newContacts = [
-			SELECT FirstName, LastName, Email, MobilePhone, Account.Name, CreatedDate 
-			FROM Contact];
-		Test.startTest();
-		List<Contact> returnedContacts =  SearchContactController.searchContacts('');
-		Test.stopTest();
-		System.assertEquals(newContacts, returnedContacts, 'Contacts were not received');
-		System.assert(returnedContacts.size() == 10, 'Was expecting to find ten contacts');
-	}
+    @isTest
+    static void searchContacts_checkIfReturnGetContacts_contactsRecieved() {
+        List<Contact> newContacts = [
+            SELECT FirstName, LastName, Email, MobilePhone, Account.Name, CreatedDate 
+            FROM Contact
+        ];
+        Test.startTest();
+        List<Contact> returnedContacts =  SearchContactController.searchContacts('');
+        Test.stopTest();
+        System.assertEquals(newContacts, returnedContacts, 'Contacts were not received');
+        System.assert(returnedContacts.size() == 10, 'Was expecting to find ten contacts');
+    }
 
-	@isTest
-	static void searchContacts_checkInvalidInput_emptyList() {
-		List<Contact> newContacts = [
-			SELECT FirstName, LastName, Email, MobilePhone, Account.Name, CreatedDate 
-			FROM Contact];
-		Test.startTest();
-		List<Contact> returnedContacts =  SearchContactController.searchContacts('&*');
-		Test.stopTest();
-		System.assert(returnedContacts.size() == 0, 'Was expecting to find no contacts');
-	}
+    @isTest
+    static void searchContacts_checkInvalidInput_emptyList() {
+        List<Contact> newContacts = [
+            SELECT FirstName, LastName, Email, MobilePhone, Account.Name, CreatedDate 
+            FROM Contact
+        ];
+        Test.startTest();
+        List<Contact> returnedContacts =  SearchContactController.searchContacts('&*');
+        Test.stopTest();
+        System.assert(returnedContacts.size() == 0, 'Was expecting to find no contacts');
+    }
 
-	@isTest
-	static void getContacts_checkNegativeReturn_emptyList() {
-		List<Contact> contacts = [
-			SELECT FirstName, LastName, Email, MobilePhone, Account.Name, CreatedDate 
-			FROM Contact];
-		delete contacts;
-		Test.startTest();
-		Boolean isException = true;
-		try {
-		SearchContactController.getContacts();
-		} catch (Exception e) {
-			if (e.getMessage().contains('Contacts are empty')) {
-			isException = true;
-			}
-		}
-		Test.stopTest();
-		System.assert(isException, 'Contact should have thrown an exception');
-	}
+    @isTest
+    static void getContacts_checkNegativeReturn_emptyList() {
+        List<Contact> contacts = [
+            SELECT FirstName, LastName, Email, MobilePhone, Account.Name, CreatedDate 
+            FROM Contact
+        ];
+        delete contacts;
+        Test.startTest();
+        Boolean isException = true;
+        try {
+            SearchContactController.getContacts();
+        } catch (Exception e) {
+            if (e.getMessage().contains('Contacts are empty')) {
+                isException = true;
+            }
+        }
+        Test.stopTest();
+        System.assert(isException, 'Contact should have thrown an exception');
+    }
 }
