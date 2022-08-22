@@ -2,11 +2,11 @@ public with sharing class SearchContactController {
 
     @AuraEnabled(cacheable=true)
     public static List<Contact> getContacts() {
-        return [          	
+        return [
             SELECT FirstName, LastName, Email, MobilePhone, Account.Name, CreatedDate 
             FROM Contact 
             LIMIT 100
-        ];         
+        ];
     }
 
     @AuraEnabled(cacheable=true)
